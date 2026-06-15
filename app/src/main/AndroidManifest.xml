@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.callscheduler">
+
+    <!-- PERMISSIONS OBLIGATOIRES -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_PHONE_CALL" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+
+    <application
+        android:name=".CallSchedulerApp"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.CallScheduler">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:theme="@style/Theme.CallScheduler">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- RECEIVER pour les alarmes -->
+        <receiver
+            android:name=".service.AlarmReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.callscheduler.ACTION_TRIGGER_CALL" />
+            </intent-filter>
+        </receiver>
+
+        <!-- RECEIVER pour le reboot -->
+        <receiver
+            android:name=".service.BootReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <!-- SERVICE d'exécution des appels -->
+        <service
+            android:name=".service.CallExecutorService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="phoneCall" />
+
+        <!-- SERVICE de monitoring -->
+        <service
+            android:name=".service.ScheduleMonitorService"
+            android:enabled="true"
+            android:exported="false" />
+
+    </application>
+</manifest>
