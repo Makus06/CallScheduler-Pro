@@ -232,7 +232,6 @@ fun AddEditCallScreen(
                                 labelColor = AppColors.TextSecondary
                             ),
                             border = FilterChipDefaults.filterChipBorder(
-                                enabled = true, selected = simSlot == slot,
                                 selectedBorderColor = AppColors.Gold,
                                 borderColor = AppColors.Divider,
                                 borderWidth = 1.dp, selectedBorderWidth = 1.5.dp
